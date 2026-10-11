@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>معرض النخبة للسيارات | سيارات جديدة ومستعملة</title>
+<meta name="description" content="تشكيلة مختارة من السيارات الجديدة والمستعملة بفحص شامل وأسعار واضحة. تصفح الصور والمواصفات واحجز سيارتك عبر واتساب.">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f7fb;
+    --white:#ffffff;
+    --ink:#0f172a;
+    --text:#334155;
+    --muted:#64748b;
+    --line:#e6eaf1;
+    --brand:#1d4ed8;
+    --brand-dark:#1e3a8a;
+    --brand-soft:#eaf0ff;
+    --wa:#16a34a;
+    --wa-dark:#15803d;
+    --new-bg:#dcfce7; --new-tx:#15803d;
+    --used-bg:#fef3c7; --used-tx:#b45309;
+    --radius:18px;
+    --shadow:0 1px 2px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.06);
+    --shadow-lg:0 2px 6px rgba(15,23,42,.05),0 20px 44px rgba(15,23,42,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{font-family:'Cairo',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  button{font-family:inherit}
+  .container{width:min(1200px,92%);margin-inline:auto}
+  .ic{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .ic.fill{fill:currentColor;stroke:none}
+
+  /* Buttons */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:12px;font-weight:700;font-size:.98rem;border:1px solid transparent;cursor:pointer;transition:.2s;white-space:nowrap}
+  .btn .ic{font-size:1.15em}
+  .btn-primary{background:var(--brand);color:#fff}
+  .btn-primary:hover{background:var(--brand-dark);transform:translateY(-1px);box-shadow:0 8px 20px rgba(29,78,216,.25)}
+  .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+  .btn-wa{background:var(--wa);color:#fff}
+  .btn-wa:hover{background:var(--wa-dark);transform:translateY(-1px);box-shadow:0 8px 20px rgba(22,163,74,.25)}
+  .btn[disabled]{background:#e2e8f0;color:#94a3b8;border-color:transparent;cursor:not-allowed;transform:none;box-shadow:none}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.2rem;color:var(--ink)}
+  .logo-mark{width:40px;height:40px;border-radius:12px;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:1.35rem}
+  .logo small{display:block;font-size:.72rem;font-weight:600;color:var(--muted);line-height:1}
+  nav ul{display:flex;gap:6px;list-style:none}
+  nav a{display:block;padding:8px 14px;border-radius:10px;color:var(--text);font-weight:600;font-size:.97rem;transition:.2s}
+  nav a:hover{background:var(--brand-soft);color:var(--brand)}
+  .nav-actions{display:flex;gap:10px}
+  .menu-btn{display:none;background:#fff;border:1px solid var(--line);border-radius:10px;width:42px;height:42px;font-size:1.3rem;color:var(--ink);cursor:pointer;place-items:center}
+
+  /* Hero */
+  .hero{background:linear-gradient(180deg,#eaf0ff 0%,#f5f7fb 100%);padding:64px 0 96px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);color:var(--brand);padding:6px 14px;border-radius:999px;font-weight:700;font-size:.88rem;margin-bottom:18px}
+  .hero h1{font-size:clamp(2rem,4.2vw,3.2rem);line-height:1.3;font-weight:800;color:var(--ink);margin-bottom:14px}
+  .hero h1 em{font-style:normal;color:var(--brand)}
+  .hero p.lead{font-size:1.08rem;color:var(--muted);max-width:540px;margin-bottom:22px}
+  .ticks{display:flex;flex-wrap:wrap;gap:10px 22px;margin-bottom:28px;list-style:none}
+  .ticks li{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--ink);font-size:.95rem}
+  .ticks .ic{color:var(--wa);background:#dcfce7;border-radius:50%;padding:3px;font-size:1.3rem}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero-media{position:relative}
+  .hero-media .photo{aspect-ratio:4/3;border-radius:26px;overflow:hidden;background:#e4e9f2;box-shadow:var(--shadow-lg);border:6px solid #fff}
+  .hero-media .photo img{width:100%;height:100%;object-fit:cover}
+  .float-chip{position:absolute;background:#fff;border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-lg);font-weight:700;font-size:.9rem;color:var(--ink)}
+  .float-chip .ic{font-size:1.4rem;color:var(--brand);background:var(--brand-soft);padding:7px;border-radius:10px;box-sizing:content-box}
+  .float-chip small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;line-height:1.3}
+  .float-chip.a{bottom:-18px;right:-14px}
+  .float-chip.b{top:22px;left:-18px}
+
+  /* Search panel */
+  .search-panel{margin-top:-56px;position:relative;z-index:5}
+  .search-card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-lg);padding:20px;display:grid;grid-template-columns:repeat(3,1fr) auto;gap:14px;align-items:end}
+  .field label{display:block;font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:6px}
+  .field select,.field input{width:100%;height:48px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);padding:0 14px;font-family:inherit;font-size:.97rem;outline:none;transition:.2s}
+  .field select:focus,.field input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(29,78,216,.12)}
+  .search-card .btn{height:48px;padding-inline:30px}
+
+  /* Stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;text-align:center}
+  .stat b{display:block;font-size:1.7rem;font-weight:800;color:var(--brand);line-height:1.2}
+  .stat span{font-size:.92rem;color:var(--muted);font-weight:600}
+
+  section{padding:72px 0}
+  .sec-head{text-align:center;max-width:620px;margin:0 auto 38px}
+  .sec-head .kicker{color:var(--brand);font-weight:800;font-size:.9rem;margin-bottom:4px}
+  .sec-head h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;color:var(--ink);line-height:1.4}
+  .sec-head p{color:var(--muted);margin-top:6px}
+
+  /* Offers */
+  #offers{padding-bottom:20px}
+  .offers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:24px}
+  .offers-grid.single{grid-template-columns:1fr;max-width:980px;margin-inline:auto}
+  .offer{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:.28s}
+  .offer:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+  .offers-grid.single .offer{display:grid;grid-template-columns:1.1fr 1fr}
+  .o-img{position:relative;aspect-ratio:16/10;background:#eef1f6;overflow:hidden}
+  .offers-grid.single .o-img{aspect-ratio:auto;min-height:300px}
+  .o-img img{width:100%;height:100%;object-fit:cover}
+  .o-badge{position:absolute;top:14px;right:14px;background:#dc2626;color:#fff;font-weight:800;padding:4px 16px;border-radius:999px;font-size:.88rem;box-shadow:0 4px 12px rgba(220,38,38,.35)}
+  .o-body{padding:22px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .o-body h3{color:var(--ink);font-size:1.2rem;font-weight:800;line-height:1.5}
+  .o-body p{color:var(--muted);font-size:.96rem}
+  .o-price{display:flex;align-items:baseline;gap:10px}
+  .o-price b{font-size:1.6rem;color:var(--brand);font-weight:800}
+  .o-price s{color:var(--muted);font-size:.95rem}
+  .o-end{font-size:.8rem;font-weight:700;color:#b45309;background:#fef3c7;padding:2px 12px;border-radius:8px;align-self:flex-start}
+  .o-actions{margin-top:auto;padding-top:6px;display:flex;gap:10px;flex-wrap:wrap}
+
+  /* About */
+  .about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .feature{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;transition:.25s}
+  .feature:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#cfd9ee}
+  .feature .fi{width:54px;height:54px;border-radius:16px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-size:1.6rem;margin-bottom:16px}
+  .feature h3{color:var(--ink);font-size:1.15rem;margin-bottom:6px}
+  .feature p{color:var(--muted);font-size:.96rem}
+
+  /* Cars */
+  #cars{background:#fff;border-block:1px solid var(--line)}
+  .toolbar{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{padding:9px 20px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--text);font-weight:700;cursor:pointer;transition:.2s;font-size:.95rem}
+  .chip:hover{border-color:var(--brand);color:var(--brand)}
+  .chip.active{background:var(--brand);border-color:var(--brand);color:#fff}
+  .tools{display:flex;gap:10px;flex-wrap:wrap}
+  .tools select,.tools input{height:42px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);padding:0 12px;font-family:inherit;font-size:.93rem;outline:none}
+  .tools select:focus,.tools input:focus{border-color:var(--brand)}
+  .resultbar{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.93rem;margin:6px 0 20px;min-height:28px}
+  .resultbar button{background:none;border:0;color:var(--brand);font-weight:700;cursor:pointer;display:none}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+  .car{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:.28s;box-shadow:0 1px 2px rgba(15,23,42,.03)}
+  .car:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:#d3dcef}
+  .media{position:relative;aspect-ratio:4/3;background:#eef1f6;overflow:hidden;cursor:zoom-in;user-select:none;-webkit-user-select:none;touch-action:pan-y}
+  .slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s ease}
+  .slides img.on{opacity:1}
+  .badge{position:absolute;top:12px;right:12px;padding:4px 14px;border-radius:999px;font-weight:800;font-size:.8rem;box-shadow:0 2px 8px rgba(15,23,42,.12)}
+  .badge.new{background:var(--new-bg);color:var(--new-tx)}
+  .badge.used{background:var(--used-bg);color:var(--used-tx)}
+  .badge.sold{background:#fee2e2;color:#b91c1c}
+  .car.sold .slides img{filter:grayscale(.85) brightness(.9)}
+  .count{position:absolute;top:12px;left:12px;background:rgba(15,23,42,.65);color:#fff;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:999px;display:flex;align-items:center;gap:5px;direction:ltr}
+  .arrow{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.95);border:0;display:grid;place-items:center;box-shadow:0 4px 12px rgba(15,23,42,.18);color:var(--ink);cursor:pointer;opacity:0;transition:.2s;font-size:1.1rem}
+  .arrow:hover{background:#fff;color:var(--brand)}
+  .arrow.prev{right:10px}
+  .arrow.next{left:10px}
+  .media:hover .arrow{opacity:1}
+  @media(hover:none){.arrow{opacity:1}}
+  .dots{position:absolute;bottom:10px;inset-inline:0;display:flex;justify-content:center;gap:6px}
+  .dots i{width:7px;height:7px;border-radius:999px;background:rgba(255,255,255,.75);box-shadow:0 0 0 1px rgba(15,23,42,.18);transition:.25s;cursor:pointer}
+  .dots i.on{width:20px;background:#fff}
+
+  .car-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:14px;flex:1}
+  .car-title{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .car-title h3{font-size:1.15rem;font-weight:800;color:var(--ink);line-height:1.4}
+  .car-title .yr{background:var(--bg);border:1px solid var(--line);color:var(--text);font-weight:700;font-size:.82rem;padding:2px 10px;border-radius:8px}
+  .specs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .spec{display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--text);background:var(--bg);border-radius:10px;padding:8px 10px}
+  .spec .ic{color:var(--brand);font-size:1.05rem}
+  .car-foot{margin-top:auto;border-top:1px solid var(--line);padding-top:14px}
+  .price{display:flex;align-items:baseline;gap:6px;margin-bottom:12px}
+  .price b{font-size:1.5rem;font-weight:800;color:var(--ink)}
+  .price span{color:var(--muted);font-weight:600;font-size:.9rem}
+  .actions{display:grid;grid-template-columns:1fr 1.3fr;gap:10px}
+  .actions .btn{padding:11px 12px}
+  .empty{text-align:center;color:var(--muted);padding:56px 0;display:none}
+
+  /* Steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:s}
+  .step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;top:22px;left:22px;font-size:2.6rem;font-weight:800;color:var(--brand-soft);line-height:1}
+  .step h3{color:var(--ink);font-size:1.1rem;margin-bottom:6px}
+  .step p{color:var(--muted);font-size:.96rem}
+
+  /* Contact */
+  #contact{padding-top:0}
+  .contact-wrap{max-width:760px;margin-inline:auto}
+  .box{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px}
+  .box h3{color:var(--ink);font-size:1.15rem;margin-bottom:16px}
+  .crow{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+  .crow .ci{width:42px;height:42px;border-radius:12px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-size:1.2rem;flex:none}
+  .crow small{display:block;color:var(--muted);font-size:.8rem;line-height:1.3}
+  .crow span{color:var(--ink);font-weight:600}
+  .box .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .hours-line{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 18px;margin-top:14px;font-size:.8rem;color:var(--muted)}
+  .hours-line .hl-title{font-weight:700;color:var(--text)}
+  .hours-line .hl-item b{color:var(--ink);font-weight:600}
+  .hours-line .hl-item+.hl-item::before{content:"";display:inline-block;width:1px;height:12px;background:var(--line);margin-inline-end:18px;vertical-align:middle}
+
+  footer{background:var(--ink);color:#cbd5e1;padding:34px 0}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;font-size:.92rem}
+  .foot .logo{color:#fff;font-size:1.05rem}
+  .foot .logo-mark{width:34px;height:34px;font-size:1.1rem}
+
+  .wa-float{position:fixed;bottom:20px;left:20px;z-index:60;width:58px;height:58px;border-radius:50%;background:var(--wa);color:#fff;display:grid;place-items:center;font-size:1.9rem;box-shadow:0 10px 26px rgba(22,163,74,.4);transition:.2s}
+  .wa-float:hover{transform:scale(1.07)}
+
+  /* Modal */
+  .overlay{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(3px);z-index:100;display:none;overflow-y:auto;padding:28px 16px}
+  .overlay.open{display:block}
+  body.lock{overflow:hidden}
+  .modal{position:relative;max-width:1080px;margin:0 auto;background:#fff;border-radius:22px;overflow:hidden;display:grid;grid-template-columns:1.15fr .85fr;box-shadow:var(--shadow-lg);animation:pop .25s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+  .m-close{position:absolute;top:14px;left:14px;z-index:5;width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:1.2rem;color:var(--ink);cursor:pointer;box-shadow:var(--shadow)}
+  .m-close:hover{color:var(--brand)}
+  .m-gal{background:#f1f4f9;padding:18px;display:flex;flex-direction:column;gap:12px}
+  .m-main{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#e4e9f2}
+  .m-main img{width:100%;height:100%;object-fit:cover}
+  .m-main .arrow{opacity:1;width:42px;height:42px}
+  .m-main .count{top:auto;bottom:12px;left:12px}
+  .m-thumbs{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
+  .m-thumbs button{flex:none;width:84px;aspect-ratio:4/3;border-radius:10px;overflow:hidden;border:2px solid transparent;padding:0;background:#e4e9f2;cursor:pointer;opacity:.7;transition:.2s}
+  .m-thumbs button.on{border-color:var(--brand);opacity:1}
+  .m-thumbs img{width:100%;height:100%;object-fit:cover}
+  .m-info{padding:30px 28px;display:flex;flex-direction:column;gap:16px}
+  .m-info h2{font-size:1.5rem;color:var(--ink);font-weight:800;line-height:1.4}
+  .m-top{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+  .m-top .badge{position:static;box-shadow:none}
+  .m-price{display:flex;align-items:baseline;gap:6px}
+  .m-price b{font-size:1.9rem;color:var(--brand);font-weight:800}
+  .m-price span{color:var(--muted);font-weight:600}
+  .m-desc{color:var(--text);font-size:.96rem}
+  .m-specs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .m-spec{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center}
+  .m-spec .ic{color:var(--brand);font-size:1.2rem}
+  .m-spec small{display:block;color:var(--muted);font-size:.76rem;line-height:1.2}
+  .m-spec b{color:var(--ink);font-size:.92rem;font-weight:700}
+  .m-feat h4{color:var(--ink);font-size:.98rem;margin-bottom:8px}
+  .m-feat ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 12px}
+  .m-feat li{display:flex;gap:8px;align-items:center;font-size:.9rem}
+  .m-feat .ic{color:var(--wa);font-size:1rem}
+  .m-cta{display:grid;gap:10px;margin-top:auto}
+
+  @media(max-width:1000px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .hero-grid{grid-template-columns:1fr;gap:36px}
+    .hero-media{max-width:560px}
+    .search-card{grid-template-columns:1fr 1fr}
+    .search-card .btn{grid-column:1/-1}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .about-grid,.steps{grid-template-columns:1fr}
+    .modal{grid-template-columns:1fr}
+  }
+  @media(max-width:760px){
+    nav{position:absolute;top:72px;inset-inline:0;background:#fff;border-bottom:1px solid var(--line);display:none;box-shadow:var(--shadow)}
+    nav.open{display:block}
+    nav ul{flex-direction:column;padding:10px 4%}
+    nav a{padding:12px 10px}
+    .nav-actions .btn-ghost{display:none}
+    .menu-btn{display:grid}
+    .grid{grid-template-columns:1fr}
+    .hero{padding:40px 0 84px}
+    .float-chip.a{right:8px}
+    .float-chip.b{left:8px}
+    .search-card{grid-template-columns:1fr}
+    .tools{width:100%}
+    .tools select,.tools input{flex:1;min-width:0}
+    section{padding:54px 0}
+    .offers-grid.single .offer{grid-template-columns:1fr}
+    .offers-grid.single .o-img{aspect-ratio:16/10;min-height:0}
+    .overlay{padding:0}
+    .modal{border-radius:0;min-height:100%}
+    .m-info{padding:22px 18px 28px}
+    .m-feat ul{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- Icons -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></symbol>
+  <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-img" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M12 14l4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="i-color" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 32 32"><path d="M16 3C9 3 3.4 8.6 3.4 15.5c0 2.4.7 4.7 1.9 6.6L3 29l7.1-2.2c1.8 1 3.8 1.5 5.9 1.5 7 0 12.6-5.6 12.6-12.6S23 3 16 3zm0 22.8c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.2 1.3 1.4-4.1-.3-.4c-1.1-1.7-1.7-3.6-1.7-5.6C5.5 9.8 10.2 5.2 16 5.2s10.5 4.6 10.5 10.3S21.8 25.8 16 25.8zm5.8-7.7c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2c-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.5c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.5l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1.1 1.1-1.1 2.6s1.1 3 1.3 3.2c.2.2 2.2 3.4 5.3 4.7.7.3 1.3.5 1.8.7.7.2 1.4.2 2 .1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></symbol>
+</svg>
+
+<header>
+  <div class="container nav">
+    <a href="#top" class="logo">
+      <div class="logo-mark"><svg class="ic"><use href="#i-car"/></svg></div>
+      <div><span data-bind="name">معرض النخبة</span><small>للسيارات الجديدة والمستعملة</small></div>
+    </a>
+    <nav id="nav">
+      <ul>
+        <li><a href="#top">الرئيسية</a></li>
+        <li id="navOffers" style="display:none"><a href="#offers">العروض</a></li>
+        <li><a href="#about">عن المعرض</a></li>
+        <li><a href="#cars">السيارات</a></li>
+        <li><a href="#steps">طريقة الحجز</a></li>
+        <li><a href="#contact">تواصل معنا</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost" id="navCall"><svg class="ic"><use href="#i-phone"/></svg><span id="navPhone" dir="ltr"></span></a>
+      <a class="btn btn-primary" href="#cars">تصفح السيارات</a>
+      <button class="menu-btn" id="menuBtn" aria-label="القائمة">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- Hero / Banner -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow"><svg class="ic"><use href="#i-shield"/></svg> فحص شامل وضمان على السيارات</span>
+        <h1 id="bTitle"></h1>
+        <p class="lead" id="bSub"></p>
+        <ul class="ticks">
+          <li><svg class="ic"><use href="#i-check"/></svg> أسعار معلنة بدون رسوم مخفية</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> تمويل ونقل ملكية</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> معاينة قبل الشراء</li>
+        </ul>
+        <div class="hero-cta">
+          <a href="#cars" class="btn btn-primary">شاهد السيارات المتاحة</a>
+          <a id="heroWa" class="btn btn-ghost" target="_blank" rel="noopener"><svg class="ic fill" viewBox="0 0 32 32"><use href="#i-wa"/></svg> تحدث معنا</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <div class="photo"><img id="bImg" alt="معرض السيارات" data-label="صورة المعرض"></div>
+        <div class="float-chip a"><svg class="ic"><use href="#i-tag"/></svg><div>أفضل الأسعار<small>مقارنة بالسوق</small></div></div>
+        <div class="float-chip b"><svg class="ic"><use href="#i-tool"/></svg><div>فحص فني<small>قبل كل عملية بيع</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search -->
+  <div class="container search-panel">
+    <div class="search-card">
+      <div class="field"><label for="hStatus">الحالة</label>
+        <select id="hStatus"><option value="all">الكل</option><option value="new">جديدة</option><option value="used">مستعملة</option></select></div>
+      <div class="field"><label for="hBrand">الماركة</label>
+        <select id="hBrand"><option value="all">كل الماركات</option></select></div>
+      <div class="field"><label for="hMax">الميزانية</label>
+        <select id="hMax">
+          <option value="0">أي سعر</option>
+          <option value="100000">حتى 100,000</option>
+          <option value="200000">حتى 200,000</option>
+          <option value="300000">حتى 300,000</option>
+          <option value="400000">حتى 400,000</option>
+        </select></div>
+      <button class="btn btn-primary" id="hGo">ابحث عن سيارة</button>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <!-- Offers -->
+  <section id="offers" style="display:none">
+    <div class="container">
+      <div class="sec-head">
+        <div class="kicker">العروض</div>
+        <h2>عروض خاصة لفترة محدودة</h2>
+        <p>استفد من عروضنا الحالية قبل انتهائها.</p>
+      </div>
+      <div class="offers-grid" id="offersGrid"></div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="sec-head">
+        <div class="kicker">عن المعرض</div>
+        <h2>نبيع السيارات بثقة، ونخدمك بعد البيع بنفس الاهتمام</h2>
+        <p>نؤمن أن شراء السيارة قرار مهم، لذلك نوفر لك الشفافية والراحة في كل خطوة.</p>
+      </div>
+      <div class="about-grid">
+        <div class="feature"><div class="fi"><svg class="ic"><use href="#i-shield"/></svg></div><h3>فحص شامل وضمان</h3><p>كل سيارة تمر بفحص فني دقيق قبل العرض، مع تقرير واضح عن حالتها.</p></div>
+        <div class="feature"><div class="fi"><svg class="ic"><use href="#i-tag"/></svg></div><h3>أسعار شفافة</h3><p>الأسعار معلنة وواضحة، مع إمكانية التمويل والتقسيط عبر جهات تمويل معتمدة.</p></div>
+        <div class="feature"><div class="fi"><svg class="ic"><use href="#i-tool"/></svg></div><h3>خدمة ما بعد البيع</h3><p>نساعدك في نقل الملكية والتأمين والصيانة حتى تستلم سيارتك براحة بال.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cars -->
+  <section id="cars">
+    <div class="container">
+      <div class="sec-head">
+        <div class="kicker">السيارات المتاحة</div>
+        <h2>اكتشف تشكيلتنا الحالية</h2>
+        <p>اضغط على صورة السيارة لمشاهدة كل الصور والتفاصيل، ثم احجز عبر واتساب.</p>
+      </div>
+
+      <div class="toolbar">
+        <div class="chips" id="chips">
+          <button class="chip active" data-f="all">الكل</button>
+          <button class="chip" data-f="new">جديدة</button>
+          <button class="chip" data-f="used">مستعملة</button>
+        </div>
+        <div class="tools">
+          <input type="search" id="search" placeholder="ابحث بالاسم أو الموديل" aria-label="بحث">
+          <select id="fBrand" aria-label="الماركة"><option value="all">كل الماركات</option></select>
+          <select id="sort" aria-label="الترتيب">
+            <option value="default">الترتيب الافتراضي</option>
+            <option value="low">السعر: الأقل أولاً</option>
+            <option value="high">السعر: الأعلى أولاً</option>
+            <option value="year">الأحدث موديلاً</option>
+          </select>
+        </div>
+      </div>
+      <div class="resultbar"><span id="count"></span><button id="reset">مسح الفلاتر</button></div>
+
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty">لا توجد سيارات مطابقة لخياراتك حالياً. جرّب تغيير الفلاتر.</div>
+    </div>
+  </section>
+
+  <!-- Steps -->
+  <section id="steps">
+    <div class="container">
+      <div class="sec-head">
+        <div class="kicker">طريقة الحجز</div>
+        <h2>احجز سيارتك في ثلاث خطوات</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>اختر السيارة</h3><p>تصفح الصور والمواصفات والأسعار، واختر السيارة المناسبة لك.</p></div>
+        <div class="step"><h3>اضغط احجز الآن</h3><p>تُفتح محادثة واتساب معنا برسالة جاهزة فيها كل تفاصيل السيارة.</p></div>
+        <div class="step"><h3>أكّد وعاين</h3><p>نؤكد لك التوفر ونحدد موعد المعاينة وإجراءات الشراء أو التمويل.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="sec-head">
+        <div class="kicker">تواصل معنا</div>
+        <h2>يسعدنا خدمتك واستقبالك</h2>
+      </div>
+      <div class="contact-wrap">
+        <div class="box">
+          <h3>معلومات التواصل</h3>
+          <div class="crow"><div class="ci"><svg class="ic"><use href="#i-pin"/></svg></div><div><small>العنوان</small><span id="cAddress"></span></div></div>
+          <div class="crow"><div class="ci"><svg class="ic"><use href="#i-phone"/></svg></div><div><small>الهاتف</small><span id="cPhone" dir="ltr"></span></div></div>
+          <div class="crow"><div class="ci"><svg class="ic"><use href="#i-mail"/></svg></div><div><small>البريد الإلكتروني</small><span id="cEmail"></span></div></div>
+          <div class="btns">
+            <a id="cWa" class="btn btn-wa" target="_blank" rel="noopener"><svg class="ic fill" viewBox="0 0 32 32"><use href="#i-wa"/></svg> راسلنا على واتساب</a>
+            <a id="cMap" class="btn btn-ghost" target="_blank" rel="noopener"><svg class="ic"><use href="#i-pin"/></svg> الموقع على الخريطة</a>
+          </div>
+        </div>
+        <div class="hours-line" id="hours"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container foot">
+    <div class="logo"><div class="logo-mark"><svg class="ic"><use href="#i-car"/></svg></div><span data-bind="name"></span></div>
+    <div>© <span id="year"></span> جميع الحقوق محفوظة.</div>
+  </div>
+</footer>
+
+<a class="wa-float" id="waFloat" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب"><svg class="ic fill" viewBox="0 0 32 32"><use href="#i-wa"/></svg></a>
+
+<!-- Modal -->
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="m-close" id="mClose" aria-label="إغلاق"><svg class="ic"><use href="#i-x"/></svg></button>
+    <div class="m-gal">
+      <div class="m-main">
+        <img id="mImg" alt="">
+        <button class="arrow prev" id="mPrev" aria-label="السابقة"><svg class="ic"><use href="#i-right"/></svg></button>
+        <button class="arrow next" id="mNext" aria-label="التالية"><svg class="ic"><use href="#i-left"/></svg></button>
+        <span class="count" id="mCount"></span>
+      </div>
+      <div class="m-thumbs" id="mThumbs"></div>
+    </div>
+    <div class="m-info">
+      <div>
+        <div class="m-top"><span class="badge" id="mBadge"></span></div>
+        <h2 id="mTitle"></h2>
+      </div>
+      <div class="m-price"><b id="mPrice"></b><span id="mCur"></span></div>
+      <p class="m-desc" id="mDesc"></p>
+      <div class="m-specs" id="mSpecs"></div>
+      <div class="m-feat"><h4>المميزات</h4><ul id="mFeat"></ul></div>
+      <div class="m-cta">
+        <button class="btn btn-wa" id="mBook"><svg class="ic fill" viewBox="0 0 32 32"><use href="#i-wa"/></svg> <span id="mBookTxt">احجز عبر واتساب</span></button>
+        <a class="btn btn-ghost" id="mCall"><svg class="ic"><use href="#i-phone"/></svg> اتصل بنا</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   البيانات تُقرأ من ملف data.json (تُعدَّل من لوحة التحكم admin.html).
+   الكتلة التالية هي بيانات احتياطية تظهر فقط إذا تعذّر تحميل data.json.
+   ===================================================================== */
+const pics = (folder, n) => Array.from({ length: n }, (_, i) => `images/${folder}/${i + 1}.jpg`);
+
+const DEFAULT_DATA = /*DD*/{
+  settings: {
+    name: "معرض النخبة للسيارات",
+    whatsapp: "966500000000",
+    phoneDisplay: "+966 50 000 0000",
+    phoneTel: "+966500000000",
+    email: "info@example.com",
+    address: "المملكة العربية السعودية - شارع المعارض",
+    mapUrl: "https://maps.google.com",
+    currency: "ريال",
+    hours: [["السبت - الخميس", "9:00 ص - 10:00 م"], ["الجمعة", "4:00 م - 10:00 م"]],
+    stats: [{ n: "+15", l: "سنة خبرة" }, { n: "+3,000", l: "عميل راضٍ" }, { n: "100%", l: "فحص قبل البيع" }]
+  },
+  banner: {
+    image: "images/hero.jpg",
+    title: "اختر سيارتك القادمة بثقة من",
+    highlight: "معرض النخبة",
+    subtitle: "تشكيلة مختارة بعناية من السيارات الجديدة والمستعملة بصور حقيقية وأسعار واضحة. تصفّح، قارن، واحجز مباشرة عبر واتساب."
+  },
+  offers: [
+    { id: 1, title: "عرض نهاية الشهر", desc: "خصم خاص على نيسان باترول مع فحص مجاني وضمان لمدة سنة.", image: "images/offers/1.jpg",
+      badge: "وفّر 13,000", oldPrice: 178000, newPrice: 165000, endDate: "", carId: 4, active: true }
+  ],
+  cars: [
+    { id: 1, brand: "تويوتا", model: "لاند كروزر VXR", year: 2026, status: "new", sold: false, price: 389000, km: 0,
+      fuel: "بنزين", gear: "أوتوماتيك", engine: "V6 تيربو 3.5L", color: "أبيض لؤلؤي", images: pics("car1", 5),
+      desc: "سيارة جديدة بالكامل بضمان الوكالة، فئة VXR بتجهيزات كاملة.",
+      features: ["فتحة سقف", "كاميرا 360", "مقاعد جلد", "شاشة 12 بوصة", "تحكم بالمسار", "حساسات أمامية وخلفية"] },
+    { id: 2, brand: "مرسيدس", model: "E200 AMG", year: 2025, status: "new", sold: false, price: 285000, km: 0,
+      fuel: "بنزين", gear: "أوتوماتيك", engine: "2.0L تيربو", color: "أسود", images: pics("car2", 4),
+      desc: "فئة AMG بتصميم رياضي أنيق وتجهيزات رفاهية متكاملة.",
+      features: ["إضاءة محيطية", "شاشتان رقميتان", "مقاعد كهربائية", "نظام صوت بورمستر", "بصمة تشغيل", "مثبت سرعة ذكي"] },
+    { id: 3, brand: "لكزس", model: "ES 350", year: 2026, status: "new", sold: false, price: 215000, km: 0,
+      fuel: "بنزين", gear: "أوتوماتيك", engine: "V6 3.5L", color: "فضي", images: pics("car3", 4),
+      desc: "راحة وفخامة يابانية مع اقتصاد واعتمادية عالية.",
+      features: ["مقاعد مكيّفة", "شاشة لمس", "مثبت سرعة", "كاميرا خلفية", "دخول بدون مفتاح", "نظام ملاحة"] },
+    { id: 4, brand: "نيسان", model: "باترول SE", year: 2022, status: "used", sold: false, price: 178000, km: 48000,
+      fuel: "بنزين", gear: "أوتوماتيك", engine: "V6 4.0L", color: "أبيض", images: pics("car4", 4),
+      desc: "نظيفة جداً، صيانة دورية منتظمة، استخدام شخصي.",
+      features: ["صيانة وكالة", "فحص شامل", "كاميرا خلفية", "فتحة سقف", "جنوط أصلية", "مقاعد جلد"] },
+    { id: 5, brand: "هيونداي", model: "سوناتا", year: 2021, status: "used", sold: false, price: 62000, km: 67000,
+      fuel: "بنزين", gear: "أوتوماتيك", engine: "2.5L", color: "رمادي", images: pics("car5", 3),
+      desc: "اقتصادية وعملية للاستخدام اليومي بحالة ممتازة.",
+      features: ["استهلاك اقتصادي", "شاشة لمس", "كاميرا خلفية", "مثبت سرعة", "بلوتوث", "فتح بدون مفتاح"] },
+    { id: 6, brand: "بي إم دبليو", model: "X5 xDrive40i", year: 2023, status: "used", sold: false, price: 245000, km: 29000,
+      fuel: "بنزين", gear: "أوتوماتيك", engine: "3.0L تيربو", color: "أزرق", images: pics("car6", 5),
+      desc: "دفع رباعي فاخر بممشى قليل وحالة الوكالة.",
+      features: ["دفع رباعي", "سقف بانوراما", "مقاعد رياضية", "عرض على الزجاج", "صوت هارمان", "مثبت سرعة ذكي"] }
+  ]
+}/*DD_END*/;
+
+/* ========================= الكود ========================= */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+const fmt = n => (+n || 0).toLocaleString("en-US");
+const ico = (n, c = "") => `<svg class="ic ${c}"><use href="#i-${n}"/></svg>`;
+const waIco = `<svg class="ic fill" viewBox="0 0 32 32"><use href="#i-wa"/></svg>`;
+
+let CONFIG = DEFAULT_DATA.settings, BANNER = DEFAULT_DATA.banner, OFFERS = [], CARS = [];
+
+const label = c => `${c.brand} ${c.model}`;
+const kmText = c => c.status === "new" ? "0 كم" : fmt(c.km) + " كم";
+
+/* صورة بديلة تظهر إذا لم توجد الصورة */
+const ph = t => "data:image/svg+xml;utf8," + encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"><rect width="640" height="480" fill="#e9edf4"/>
+   <g fill="none" stroke="#9aa8c0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+   <path d="M170 292h300M186 292l22-64c6-14 16-22 32-22h160c16 0 26 8 34 22l24 64M186 292v30h48v-30M406 292v30h48v-30"/>
+   <circle cx="240" cy="292" r="22"/><circle cx="400" cy="292" r="22"/></g>
+   <text x="320" y="390" text-anchor="middle" font-family="Arial" font-size="26" fill="#7b8aa5">${esc(t)}</text></svg>`);
+document.addEventListener("error", e => {
+  const el = e.target;
+  if (el.tagName === "IMG" && !el.dataset.fb) { el.dataset.fb = 1; el.src = ph(el.dataset.label || ""); }
+}, true);
+
+const imagesOf = c => (c.images && c.images.length) ? c.images : [ph(label(c))];
+const waLink = msg => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+
+/* ---------- بطاقة السيارة ---------- */
+function card(c) {
+  const imgs = imagesOf(c), n = imgs.length;
+  const slides = imgs.map((s, i) =>
+    `<img class="${i === 0 ? "on" : ""}" src="${esc(s)}" alt="${esc(label(c))} - صورة ${i + 1}" data-label="${esc(label(c))}" ${i ? 'loading="lazy"' : ""}>`).join("");
+  const badge = c.sold ? `<span class="badge sold">مباعة</span>`
+    : `<span class="badge ${c.status}">${c.status === "new" ? "جديدة" : "مستعملة"}</span>`;
+  return `
+  <article class="car ${c.sold ? "sold" : ""}">
+    <div class="media" data-id="${c.id}" data-i="0">
+      <div class="slides">${slides}</div>
+      ${badge}
+      <span class="count">${ico("img")} 1 / ${n}</span>
+      ${n > 1 ? `<button class="arrow prev" aria-label="السابقة">${ico("right")}</button>
+                 <button class="arrow next" aria-label="التالية">${ico("left")}</button>
+                 <div class="dots">${imgs.map((_, i) => `<i class="${i === 0 ? "on" : ""}"></i>`).join("")}</div>` : ""}
+    </div>
+    <div class="car-body">
+      <div class="car-title"><h3>${esc(label(c))}</h3><span class="yr">${esc(c.year)}</span></div>
+      <div class="specs">
+        <div class="spec">${ico("gear")} ${esc(c.gear)}</div>
+        <div class="spec">${ico("fuel")} ${esc(c.fuel)}</div>
+        <div class="spec">${ico("gauge")} ${kmText(c)}</div>
+        <div class="spec">${ico("bolt")} ${esc(c.engine)}</div>
+      </div>
+      <div class="car-foot">
+        <div class="price"><b>${fmt(c.price)}</b><span>${esc(CONFIG.currency)}</span></div>
+        <div class="actions">
+          <button class="btn btn-ghost" data-details="${c.id}">التفاصيل</button>
+          ${c.sold ? `<button class="btn" disabled>تم البيع</button>`
+                   : `<button class="btn btn-wa" data-book="${c.id}">${waIco} احجز الآن</button>`}
+        </div>
+      </div>
+    </div>
+  </article>`;
+}
+
+/* ---------- الفلاتر ---------- */
+const state = { status: "all", brand: "all", max: 0, q: "", sort: "default" };
+
+function render() {
+  let list = CARS.filter(c =>
+    (state.status === "all" || c.status === state.status) &&
+    (state.brand === "all" || c.brand === state.brand) &&
+    (!state.max || c.price <= state.max) &&
+    (label(c) + " " + c.year).toLowerCase().includes(state.q.toLowerCase()));
+  if (state.sort === "low") list.sort((a, b) => a.price - b.price);
+  if (state.sort === "high") list.sort((a, b) => b.price - a.price);
+  if (state.sort === "year") list.sort((a, b) => b.year - a.year);
+  $("#grid").innerHTML = list.map(card).join("");
+  $("#empty").style.display = list.length ? "none" : "block";
+  $("#count").textContent = `عرض ${list.length} من ${CARS.length} سيارة`;
+  const dirty = state.status !== "all" || state.brand !== "all" || state.max || state.q || state.sort !== "default";
+  $("#reset").style.display = dirty ? "inline" : "none";
+}
+function syncControls() {
+  $$(".chip").forEach(x => x.classList.toggle("active", x.dataset.f === state.status));
+  $("#fBrand").value = state.brand; $("#sort").value = state.sort; $("#search").value = state.q;
+  $("#hStatus").value = state.status; $("#hBrand").value = state.brand; $("#hMax").value = state.max;
+}
+$("#chips").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  state.status = b.dataset.f; syncControls(); render();
+});
+$("#search").addEventListener("input", e => { state.q = e.target.value.trim(); render(); });
+$("#fBrand").addEventListener("change", e => { state.brand = e.target.value; syncControls(); render(); });
+$("#sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
+$("#reset").addEventListener("click", () => { Object.assign(state, { status: "all", brand: "all", max: 0, q: "", sort: "default" }); syncControls(); render(); });
+$("#hGo").addEventListener("click", () => {
+  state.status = $("#hStatus").value; state.brand = $("#hBrand").value; state.max = +$("#hMax").value;
+  syncControls(); render(); $("#cars").scrollIntoView({ behavior: "smooth" });
+});
+
+/* ---------- سلايدر البطاقة ---------- */
+function slide(media, to) {
+  const imgs = [...media.querySelectorAll(".slides img")];
+  const n = imgs.length, i = ((to % n) + n) % n;
+  imgs.forEach((im, k) => im.classList.toggle("on", k === i));
+  media.dataset.i = i;
+  const ct = media.querySelector(".count"); if (ct) ct.lastChild.textContent = ` ${i + 1} / ${n}`;
+  media.querySelectorAll(".dots i").forEach((d, k) => d.classList.toggle("on", k === i));
+}
+let swiped = false, tx = 0, tm = null;
+const grid = $("#grid");
+grid.addEventListener("touchstart", e => { tm = e.target.closest(".media"); tx = e.touches[0].clientX; }, { passive: true });
+grid.addEventListener("touchend", e => {
+  if (!tm) return;
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 40) { slide(tm, +tm.dataset.i + (dx < 0 ? 1 : -1)); swiped = true; setTimeout(() => swiped = false, 350); }
+  tm = null;
+});
+grid.addEventListener("click", e => {
+  if (swiped) return;
+  const m = e.target.closest(".media");
+  const arrow = e.target.closest(".arrow");
+  if (arrow && m) { slide(m, +m.dataset.i + (arrow.classList.contains("next") ? 1 : -1)); return; }
+  const dot = e.target.closest(".dots i");
+  if (dot && m) { slide(m, [...dot.parentNode.children].indexOf(dot)); return; }
+  const bk = e.target.closest("[data-book]"); if (bk) { book(+bk.dataset.book); return; }
+  const dt = e.target.closest("[data-details]"); if (dt) { openModal(+dt.dataset.details, 0); return; }
+  if (m) openModal(+m.dataset.id, +m.dataset.i);
+});
+
+/* ---------- نافذة التفاصيل ---------- */
+let mCar = null, mIdx = 0, mImgs = [];
+function openModal(id, idx = 0) {
+  mCar = CARS.find(c => c.id === id); if (!mCar) return;
+  const c = mCar; mImgs = imagesOf(c);
+  $("#mTitle").textContent = `${label(c)} ${c.year}`;
+  const b = $("#mBadge");
+  b.className = "badge " + (c.sold ? "sold" : c.status);
+  b.textContent = c.sold ? "مباعة" : (c.status === "new" ? "جديدة" : "مستعملة");
+  $("#mPrice").textContent = fmt(c.price); $("#mCur").textContent = CONFIG.currency;
+  $("#mDesc").textContent = c.desc || "";
+  const specs = [["cal", "الموديل", c.year], ["gauge", "الممشى", kmText(c)], ["gear", "القير", c.gear],
+                 ["fuel", "الوقود", c.fuel], ["bolt", "المحرك", c.engine], ["color", "اللون", c.color]];
+  $("#mSpecs").innerHTML = specs.map(s => `<div class="m-spec">${ico(s[0])}<div><small>${s[1]}</small><b>${esc(s[2])}</b></div></div>`).join("");
+  $("#mFeat").innerHTML = (c.features || []).map(f => `<li>${ico("check")} ${esc(f)}</li>`).join("");
+  $(".m-feat").style.display = (c.features || []).length ? "" : "none";
+  $("#mThumbs").innerHTML = mImgs.map((s, i) => `<button data-t="${i}" aria-label="صورة ${i + 1}"><img src="${esc(s)}" alt="" data-label="${i + 1}"></button>`).join("");
+  const many = mImgs.length > 1;
+  $("#mPrev").style.display = $("#mNext").style.display = many ? "grid" : "none";
+  $("#mThumbs").style.display = many ? "flex" : "none";
+  $("#mBook").disabled = !!c.sold;
+  $("#mBookTxt").textContent = c.sold ? "تم البيع" : "احجز عبر واتساب";
+  showM(idx);
+  $("#overlay").classList.add("open"); $("#overlay").setAttribute("aria-hidden", "false");
+  document.body.classList.add("lock"); $("#overlay").scrollTop = 0;
+}
+function showM(i) {
+  const n = mImgs.length; mIdx = ((i % n) + n) % n;
+  const img = $("#mImg"); delete img.dataset.fb;
+  img.dataset.label = label(mCar); img.alt = `${label(mCar)} - صورة ${mIdx + 1}`; img.src = mImgs[mIdx];
+  $("#mCount").innerHTML = `${ico("img")} ${mIdx + 1} / ${n}`;
+  $$("#mThumbs button").forEach((t, k) => t.classList.toggle("on", k === mIdx));
+  const on = $("#mThumbs button.on"); if (on && on.scrollIntoView) on.scrollIntoView({ block: "nearest", inline: "nearest" });
+}
+function closeModal() {
+  $("#overlay").classList.remove("open"); $("#overlay").setAttribute("aria-hidden", "true");
+  document.body.classList.remove("lock"); mCar = null;
+}
+$("#mClose").addEventListener("click", closeModal);
+$("#overlay").addEventListener("click", e => { if (e.target.id === "overlay") closeModal(); });
+$("#mPrev").addEventListener("click", () => showM(mIdx - 1));
+$("#mNext").addEventListener("click", () => showM(mIdx + 1));
+$("#mThumbs").addEventListener("click", e => { const t = e.target.closest("[data-t]"); if (t) showM(+t.dataset.t); });
+$("#mBook").addEventListener("click", () => mCar && book(mCar.id));
+document.addEventListener("keydown", e => {
+  if (!mCar) return;
+  if (e.key === "Escape") closeModal();
+  if (e.key === "ArrowLeft") showM(mIdx + 1);
+  if (e.key === "ArrowRight") showM(mIdx - 1);
+});
+let mx = 0;
+$(".m-main").addEventListener("touchstart", e => mx = e.touches[0].clientX, { passive: true });
+$(".m-main").addEventListener("touchend", e => {
+  const dx = e.changedTouches[0].clientX - mx;
+  if (Math.abs(dx) > 40) showM(mIdx + (dx < 0 ? 1 : -1));
+});
+
+/* ---------- الحجز عبر واتساب ---------- */
+function book(id) {
+  const c = CARS.find(x => x.id === id); if (!c || c.sold) return;
+  const url = location.href.split("#")[0].split("?")[0] + "?car=" + c.id;
+  const msg =
+`السلام عليكم، أرغب بحجز السيارة التالية من ${CONFIG.name}:
+
+🚗 السيارة: ${label(c)}
+📅 الموديل: ${c.year}
+📌 الحالة: ${c.status === "new" ? "جديدة" : "مستعملة"}
+🛣️ الممشى: ${kmText(c)}
+⚙️ القير: ${c.gear}
+⛽ الوقود: ${c.fuel}
+🔧 المحرك: ${c.engine}
+🎨 اللون: ${c.color}
+💰 السعر: ${fmt(c.price)} ${CONFIG.currency}
+🔖 رقم السيارة: #${c.id}
+🔗 الرابط: ${url}
+
+الرجاء تأكيد توفرها وموعد المعاينة.`;
+  window.open(waLink(msg), "_blank", "noopener");
+}
+
+/* ---------- العروض ---------- */
+const fmtDate = d => { try { return new Date(d + "T00:00:00").toLocaleDateString("ar-u-ca-gregory-nu-latn", { day: "numeric", month: "long", year: "numeric" }); } catch (e) { return d; } };
+
+function renderOffers() {
+  const now = new Date();
+  const list = (OFFERS || []).filter(o => o.active !== false && !(o.endDate && new Date(o.endDate + "T23:59:59") < now));
+  $("#offers").style.display = list.length ? "" : "none";
+  $("#navOffers").style.display = list.length ? "" : "none";
+  const g = $("#offersGrid");
+  g.className = "offers-grid" + (list.length === 1 ? " single" : "");
+  g.innerHTML = list.map(o => {
+    const car = CARS.find(c => c.id === +o.carId);
+    const showCar = car && !car.sold;
+    return `
+    <article class="offer">
+      <div class="o-img">
+        <img src="${esc(o.image || ph(o.title))}" alt="${esc(o.title)}" data-label="${esc(o.title)}" loading="lazy">
+        ${o.badge ? `<span class="o-badge">${esc(o.badge)}</span>` : ""}
+      </div>
+      <div class="o-body">
+        <h3>${esc(o.title)}</h3>
+        ${o.desc ? `<p>${esc(o.desc)}</p>` : ""}
+        ${+o.newPrice ? `<div class="o-price"><b>${fmt(o.newPrice)} ${esc(CONFIG.currency)}</b>${+o.oldPrice ? `<s>${fmt(o.oldPrice)}</s>` : ""}</div>` : ""}
+        ${o.endDate ? `<span class="o-end">ينتهي العرض: ${esc(fmtDate(o.endDate))}</span>` : ""}
+        <div class="o-actions">
+          <button class="btn btn-wa" data-offer="${o.id}">${waIco} اطلب العرض</button>
+          ${showCar ? `<button class="btn btn-ghost" data-ocar="${car.id}">تفاصيل السيارة</button>` : ""}
+        </div>
+      </div>
+    </article>`;
+  }).join("");
+}
+$("#offersGrid").addEventListener("click", e => {
+  const b = e.target.closest("[data-offer]");
+  if (b) { offerWa(+b.dataset.offer); return; }
+  const c = e.target.closest("[data-ocar]");
+  if (c) openModal(+c.dataset.ocar, 0);
+});
+function offerWa(id) {
+  const o = OFFERS.find(x => x.id === id); if (!o) return;
+  const car = CARS.find(c => c.id === +o.carId);
+  const lines = [`السلام عليكم، أرغب بالاستفادة من العرض التالي من ${CONFIG.name}:`, "", `🎁 العرض: ${o.title}`];
+  if (o.desc) lines.push(`📝 ${o.desc}`);
+  if (car) lines.push(`🚗 السيارة: ${label(car)} ${car.year}`);
+  if (+o.newPrice) lines.push(`💰 سعر العرض: ${fmt(o.newPrice)} ${CONFIG.currency}` + (+o.oldPrice ? ` (بدلاً من ${fmt(o.oldPrice)})` : ""));
+  if (o.endDate) lines.push(`⏳ ينتهي: ${fmtDate(o.endDate)}`);
+  lines.push("", "الرجاء تأكيد توفر العرض.");
+  window.open(waLink(lines.join("\n")), "_blank", "noopener");
+}
+
+/* ---------- القائمة على الجوال ---------- */
+$("#menuBtn").addEventListener("click", () => $("#nav").classList.toggle("open"));
+$$("#nav a").forEach(a => a.addEventListener("click", () => $("#nav").classList.remove("open")));
+
+/* ---------- تهيئة الصفحة من البيانات ---------- */
+function init(data) {
+  CONFIG = Object.assign({}, DEFAULT_DATA.settings, data.settings || {});
+  BANNER = Object.assign({}, DEFAULT_DATA.banner, data.banner || {});
+  OFFERS = Array.isArray(data.offers) ? data.offers : [];
+  CARS = Array.isArray(data.cars) ? data.cars.map(c => Object.assign({ images: [], features: [], sold: false, km: 0 }, c)) : [];
+
+  document.title = `${CONFIG.name} | سيارات جديدة ومستعملة`;
+  $$("[data-bind=name]").forEach(el => el.textContent = CONFIG.name);
+  $("#navPhone").textContent = CONFIG.phoneDisplay;
+  $("#navCall").href = "tel:" + CONFIG.phoneTel;
+  $("#cAddress").textContent = CONFIG.address;
+  $("#cPhone").textContent = CONFIG.phoneDisplay;
+  $("#cEmail").textContent = CONFIG.email;
+  $("#cMap").href = CONFIG.mapUrl || "#";
+  $("#mCall").href = "tel:" + CONFIG.phoneTel;
+  const hello = waLink(`السلام عليكم، لدي استفسار بخصوص السيارات المتوفرة لديكم في ${CONFIG.name}.`);
+  ["#cWa", "#waFloat", "#heroWa"].forEach(s => $(s).href = hello);
+  $("#hours").innerHTML = `<span class="hl-title">ساعات العمل:</span>` +
+    (CONFIG.hours || []).map(h => `<span class="hl-item">${esc(h[0])}: <b>${esc(h[1])}</b></span>`).join("");
+
+  const stats = (CONFIG.stats || []).filter(s => s.n || s.l).map(s => `<div class="stat"><b>${esc(s.n)}</b><span>${esc(s.l)}</span></div>`);
+  stats.push(`<div class="stat"><b>${CARS.filter(c => !c.sold).length}</b><span>سيارة متاحة الآن</span></div>`);
+  $("#stats").innerHTML = stats.join("");
+  $("#year").textContent = new Date().getFullYear();
+
+  /* البانر */
+  $("#bTitle").innerHTML = esc(BANNER.title) + (BANNER.highlight ? ` <em>${esc(BANNER.highlight)}</em>` : "");
+  $("#bSub").textContent = BANNER.subtitle || "";
+  const bi = $("#bImg"); delete bi.dataset.fb; bi.src = BANNER.image || ph("صورة المعرض");
+
+  /* الماركات */
+  const brands = [...new Set(CARS.map(c => c.brand))];
+  $$("#hBrand, #fBrand").forEach(sel => {
+    sel.innerHTML = `<option value="all">كل الماركات</option>` + brands.map(b => `<option value="${esc(b)}">${esc(b)}</option>`).join("");
+  });
+
+  renderOffers();
+  render();
+  const q = new URLSearchParams(location.search).get("car");
+  if (q) openModal(+q, 0);
+}
+
+(async function boot() {
+  let data = DEFAULT_DATA;
+  try {
+    const r = await fetch("data.json?v=" + Date.now(), { cache: "no-store" });
+    if (r.ok) data = await r.json();
+  } catch (e) { /* نستخدم البيانات الاحتياطية */ }
+  init(data);
+})();
+</script>
+</body>
+</html>
