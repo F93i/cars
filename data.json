@@ -60,20 +60,13 @@
       "model": "لاند كروزر VXR",
       "year": 2026,
       "status": "new",
-      "sold": false,
+      "sold": true,
       "price": 389000,
       "km": 0,
       "fuel": "بنزين",
       "gear": "أوتوماتيك",
       "engine": "V6 تيربو 3.5L",
       "color": "أبيض لؤلؤي",
-      "images": [
-        "images/car1/1.jpg",
-        "images/car1/2.jpg",
-        "images/car1/3.jpg",
-        "images/car1/4.jpg",
-        "images/car1/5.jpg"
-      ],
       "desc": "سيارة جديدة بالكامل بضمان الوكالة، فئة VXR بتجهيزات كاملة.",
       "features": [
         "فتحة سقف",
@@ -82,6 +75,10 @@
         "شاشة 12 بوصة",
         "تحكم بالمسار",
         "حساسات أمامية وخلفية"
+      ],
+      "images": [
+        "images/cars/mv9yq1yb-x3u8.jpg",
+        "images/cars/mv9yq1xu-i87h.jpg"
       ]
     },
     {
@@ -97,12 +94,6 @@
       "gear": "أوتوماتيك",
       "engine": "2.0L تيربو",
       "color": "أسود",
-      "images": [
-        "images/car2/1.jpg",
-        "images/car2/2.jpg",
-        "images/car2/3.jpg",
-        "images/car2/4.jpg"
-      ],
       "desc": "فئة AMG بتصميم رياضي أنيق وتجهيزات رفاهية متكاملة.",
       "features": [
         "إضاءة محيطية",
@@ -111,6 +102,10 @@
         "نظام صوت بورمستر",
         "بصمة تشغيل",
         "مثبت سرعة ذكي"
+      ],
+      "images": [
+        "images/cars/mv9yx602-4y9y.jpg",
+        "images/cars/mv9yygn6-vc8k.jpg"
       ]
     },
     {
@@ -126,12 +121,6 @@
       "gear": "أوتوماتيك",
       "engine": "V6 3.5L",
       "color": "فضي",
-      "images": [
-        "images/car3/1.jpg",
-        "images/car3/2.jpg",
-        "images/car3/3.jpg",
-        "images/car3/4.jpg"
-      ],
       "desc": "راحة وفخامة يابانية مع اقتصاد واعتمادية عالية.",
       "features": [
         "مقاعد مكيّفة",
@@ -140,6 +129,10 @@
         "كاميرا خلفية",
         "دخول بدون مفتاح",
         "نظام ملاحة"
+      ],
+      "images": [
+        "images/cars/mv9yuqvt-ecs6.jpg",
+        "images/cars/mv9yug9b-ogg8.jpg"
       ]
     },
     {
@@ -155,12 +148,6 @@
       "gear": "أوتوماتيك",
       "engine": "V6 4.0L",
       "color": "أبيض",
-      "images": [
-        "images/car4/1.jpg",
-        "images/car4/2.jpg",
-        "images/car4/3.jpg",
-        "images/car4/4.jpg"
-      ],
       "desc": "نظيفة جداً، صيانة دورية منتظمة، استخدام شخصي.",
       "features": [
         "صيانة وكالة",
@@ -169,6 +156,11 @@
         "فتحة سقف",
         "جنوط أصلية",
         "مقاعد جلد"
+      ],
+      "images": [
+        "images/cars/mv9z1yob-ib2r.jpg",
+        "images/cars/mv9z1ypu-65wv.jpg",
+        "images/cars/mv9yz0pk-ea74.jpg"
       ]
     },
     {
@@ -184,11 +176,6 @@
       "gear": "أوتوماتيك",
       "engine": "2.5L",
       "color": "رمادي",
-      "images": [
-        "images/car5/1.jpg",
-        "images/car5/2.jpg",
-        "images/car5/3.jpg"
-      ],
       "desc": "اقتصادية وعملية للاستخدام اليومي بحالة ممتازة.",
       "features": [
         "استهلاك اقتصادي",
@@ -197,6 +184,10 @@
         "مثبت سرعة",
         "بلوتوث",
         "فتح بدون مفتاح"
+      ],
+      "images": [
+        "images/cars/mv9z0ylb-h0z1.jpg",
+        "images/cars/mv9z19xy-uzzt.jpg"
       ]
     },
     {
@@ -212,13 +203,6 @@
       "gear": "أوتوماتيك",
       "engine": "3.0L تيربو",
       "color": "أزرق",
-      "images": [
-        "images/car6/1.jpg",
-        "images/car6/2.jpg",
-        "images/car6/3.jpg",
-        "images/car6/4.jpg",
-        "images/car6/5.jpg"
-      ],
       "desc": "دفع رباعي فاخر بممشى قليل وحالة الوكالة.",
       "features": [
         "دفع رباعي",
@@ -227,6 +211,11 @@
         "عرض على الزجاج",
         "صوت هارمان",
         "مثبت سرعة ذكي"
+      ],
+      "images": [
+        "images/cars/mv9yp8tb-dyi0.jpg",
+        "images/cars/mv9yp8rn-bx3m.jpg",
+        "images/cars/mv9yp8pz-jgqj.jpg"
       ]
     }
   ]
