@@ -31,7 +31,8 @@
   .login-card .lm{width:52px;height:52px;border-radius:14px;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:1.6rem;margin-bottom:14px}
   .login-card h1{color:var(--ink);font-size:1.5rem;margin-bottom:4px}
   .login-card p.sub{color:var(--muted);margin-bottom:20px}
-  .err{background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;border-radius:12px;padding:10px 14px;margin:12px 0;font-size:.92rem}
+  .offline{background:#fef3c7;border:1px solid #fde68a;color:#92400e;border-radius:12px;padding:10px 14px;margin:16px 0 0;font-size:.9rem}
+  .err{white-space:pre-line;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;border-radius:12px;padding:10px 14px;margin:12px 0;font-size:.92rem}
   details{margin-top:18px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#f8faff}
   summary{cursor:pointer;font-weight:700;color:var(--ink)}
   details ol{margin:10px 18px 0 0;font-size:.92rem;color:var(--text)}
@@ -157,6 +158,8 @@
     <label class="chk"><input type="checkbox" id="lRemember" checked> تذكّر الاتصال على هذا الجهاز</label>
     <div class="err" id="lErr" hidden></div>
     <button class="btn btn-primary" id="lGo" style="width:100%">اتصال</button>
+    <button class="btn btn-ghost" id="lOffline" style="width:100%;margin-top:10px">العمل بدون اتصال (رفع يدوي إلى GitHub)</button>
+    <p class="note" style="margin-top:8px">إذا كان GitHub API محجوباً عندك، استخدم هذا الوضع: تعدّل هنا ثم تنزّل ملف ZIP وترفعه بنفسك من موقع GitHub.</p>
     <details>
       <summary>كيف أنشئ رمز الوصول؟</summary>
       <ol>
@@ -186,6 +189,7 @@
   </header>
 
   <div class="container">
+    <div class="offline" id="offBanner" hidden></div>
     <div class="tabs" id="tabs">
       <button class="tab active" data-tab="cars">السيارات</button>
       <button class="tab" data-tab="offers">العروض</button>
@@ -363,13 +367,23 @@ window.addEventListener("beforeunload", e => { if (dirty) { e.preventDefault(); 
 
 /* ============================ GitHub API ============================ */
 const NET_MSG = "تعذر الوصول إلى GitHub (Failed to fetch). هذا يعني أن متصفحك لم يتمكن من الاتصال بـ api.github.com، وليس أن الرمز خاطئ. جرّب: (1) تأكد من الإنترنت، (2) أوقف VPN أو مانع الإعلانات/الحماية لهذه الصفحة، (3) جرّب متصفحاً آخر أو شبكة أخرى مثل بيانات الجوال.";
+async function netDiag() {
+  const where = location.protocol === "file:"
+    ? "• الصفحة مفتوحة كملف من جهازك (file://). افتحها من رابط موقعك https://اسمك.github.io/... بدل الملف."
+    : "• الصفحة مفتوحة من: " + location.origin;
+  let ok = false;
+  try { const r = await fetch("https://api.github.com/zen", { cache: "no-store" }); ok = r.ok; } catch (e) {}
+  return where + "\n• " + (ok
+    ? "الوصول العام إلى api.github.com يعمل، لكن الطلب المصادَق عليه فشل. غالباً إضافة أو حماية تمنع ترويسة Authorization، أو الرمز فيه أحرف غريبة."
+    : "api.github.com غير قابل للوصول من هذه الصفحة إطلاقاً: حجب من الشبكة/DNS، أو إضافة، أو أن الصفحة تُعرض داخل معاينة لا تسمح بالاتصال الخارجي.");
+}
 const api = async (path, opts = {}) => {
   try {
-    return await fetch(`https://api.github.com/repos/${encodeURIComponent(conn.owner)}/${encodeURIComponent(conn.repo)}/${path}`, {
+    return await fetch(`https://api.github.com/repos/${encodeURIComponent(conn.owner)}/${encodeURIComponent(conn.repo)}${path ? "/" + path : ""}`, {
       ...opts,
       headers: { Accept: "application/vnd.github+json", Authorization: "Bearer " + conn.token, ...(opts.headers || {}) }
     });
-  } catch (e) { throw new Error(NET_MSG); }
+  } catch (e) { throw new Error(NET_MSG + "\n\n" + await netDiag()); }
 };
 async function apiError(r) {
   let m = ""; try { m = (await r.json()).message || ""; } catch (e) {}
@@ -707,6 +721,7 @@ async function putData() {
   sha = (await r.json()).content.sha;
 }
 $("#publish").addEventListener("click", async () => {
+  if (!conn) return exportZip();
   if (!dirty && !Object.keys(pending).length && !confirm("لا توجد تغييرات جديدة. هل تريد النشر على أي حال؟")) return;
   const used = usedPaths(), toUp = Object.keys(pending).filter(p => used.has(p));
   $("#publish").disabled = true;
@@ -727,6 +742,62 @@ $("#publish").addEventListener("click", async () => {
     progress(false); toast("فشل النشر: " + e.message, "err");
   } finally { $("#publish").disabled = false; }
 });
+
+/* ============================ وضع بدون اتصال (رفع يدوي) ============================ */
+const crcTable = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u8) { let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = crcTable[(c ^ u8[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function b64ToBytes(b64) { const bin = atob(b64); const u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; }
+function zipBytes(files) {
+  const enc = new TextEncoder(), parts = [], central = []; let offset = 0;
+  const now = new Date();
+  const dt = (now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1);
+  const dd = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+  for (const f of files) {
+    const name = enc.encode(f.name), crc = crc32(f.data), size = f.data.length;
+    const lh = new DataView(new ArrayBuffer(30));
+    lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true); lh.setUint16(8, 0, true);
+    lh.setUint16(10, dt, true); lh.setUint16(12, dd, true); lh.setUint32(14, crc, true); lh.setUint32(18, size, true);
+    lh.setUint32(22, size, true); lh.setUint16(26, name.length, true); lh.setUint16(28, 0, true);
+    parts.push(new Uint8Array(lh.buffer), name, f.data);
+    const ch = new DataView(new ArrayBuffer(46));
+    ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true);
+    ch.setUint16(10, 0, true); ch.setUint16(12, dt, true); ch.setUint16(14, dd, true); ch.setUint32(16, crc, true);
+    ch.setUint32(20, size, true); ch.setUint32(24, size, true); ch.setUint16(28, name.length, true);
+    ch.setUint32(42, offset, true);
+    central.push(new Uint8Array(ch.buffer), name);
+    offset += 30 + name.length + size;
+  }
+  const cdSize = central.reduce((a, p) => a + p.length, 0);
+  const end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+  end.setUint32(12, cdSize, true); end.setUint32(16, offset, true);
+  const all = [...parts, ...central, new Uint8Array(end.buffer)];
+  const out = new Uint8Array(all.reduce((a, p) => a + p.length, 0)); let o = 0;
+  all.forEach(p => { out.set(p, o); o += p.length; });
+  return out;
+}
+function exportZip() {
+  const used = usedPaths(), files = [{ name: "data.json", data: new TextEncoder().encode(JSON.stringify(db, null, 2)) }];
+  let n = 0;
+  Object.keys(pending).forEach(p => { if (used.has(p)) { files.push({ name: p, data: b64ToBytes(pending[p].split(",")[1]) }); n++; } });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([zipBytes(files)], { type: "application/zip" })); a.download = "site-update.zip";
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  setDirty(false);
+  alert("تم تنزيل الملف site-update.zip (فيه data.json و " + n + " صورة جديدة).\n\nللنشر:\n1) فك الضغط عن الملف.\n2) افتح المستودع في GitHub ثم Add file ← Upload files.\n3) اسحب ملف data.json ومجلد images (من داخل المجلد المفكوك) إلى الصفحة.\n4) اضغط Commit changes. يظهر التحديث في الموقع خلال دقيقة تقريباً.");
+}
+async function startOffline() {
+  conn = null; let loaded = false;
+  try { const r = await fetch("data.json?v=" + Date.now(), { cache: "no-store" }); if (r.ok) { db = normalize(await r.json()); loaded = true; } } catch (e) {}
+  if (!loaded) db = normalize(null);
+  showApp();
+  $("#publish").lastChild.textContent = " تنزيل ملفات التحديث";
+  const b = $("#offBanner"); b.hidden = false;
+  b.textContent = loaded
+    ? "وضع بدون اتصال: عدّل ما تشاء، ثم اضغط «تنزيل ملفات التحديث» وارفع الملفات إلى GitHub يدوياً."
+    : "وضع بدون اتصال: تعذر تحميل data.json الحالي (غالباً لأنك فتحت الملف من جهازك). لتجنب فقدان السيارات الموجودة: نزّل data.json من المستودع ثم استورده من الإعدادات ← استيراد قبل أي تعديل، وإلا سيحل ملفك محل الموجود.";
+}
+$("#lOffline").addEventListener("click", startOffline);
 
 /* ============================ البدء ============================ */
 (function start() {
